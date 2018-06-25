@@ -3,26 +3,53 @@ body {
 
 }
 .tictactoe {
-  display: block;
-}
 
-.grid-container {
+
+}
+/* .grid-containerfour {
+
   display: grid;
-  grid-template-columns: 15vw 15vw 15vw;
+  grid-template-columns: 10vw 10vw 10vw 20vw;
+  grid-template-rows: 10vw 10vw 10vw;
+} */
+
+
+.grid-container3 {
+  display: grid;
+  grid-template-columns: 15vw 15vw 15vw 15vw 15vw;
   grid-template-rows: 15vw 15vw 15vw;
 }
 
-.grid-container > div {
+.box {
   border: solid black 1px;
-  font-size: 13vw;
+  font-size: 12vw;
   text-align: center;
 }
+.grid-container3 > .box:hover{
+  font-size: 14vw;
+  color: red;
+}
+.line {
+  color: green;
+}
+
+.grid-container3 > #sideLeft {
+grid-row: 1 / span 3;
+padding-left: 10px;
+
+}
+.grid-container3 > #sideRight {
+grid-row: 1 /span 3;
+grid-column: 5;
+text-align: center;
+}
+
 nav {
 	width: 100%;
   margin: 0;
   padding: 0;
 	display: block;
-position: fixed;
+
 	height: 70px;
   background-color: black;
 }
@@ -43,4 +70,33 @@ nav ul li:hover {
   background: linear-gradient( #4dc2f96b, #4dc2f905)
   */
   color: white;
+}
+
+#input1, #input2 {
+  width: 80%;
+}
+
+
+
+
+
+
+
+
+.grid-container4 {
+
+  display: grid;
+  grid-template-columns: 15vw 15vw 15vw 15vw 15vw 20vw;
+  grid-template-rows: 15vw 15vw 15vw 15vw;
+}
+
+.grid-container4 > #sideLeft {
+grid-row: 1 / span 4;
+padding-left: 10px;
+
+}
+.grid-container4 > #sideRight {
+grid-row: 1 /span 4;
+grid-column: 6;
+text-align: center;
 }

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/style.css">
-    <script src='js/jquery.js'></script>
+  <script src='js/jquery.js'></script>
   <script src='js/main.js'></script>
-
 
   <title>Document</title>
 </head>
+
 <body>
   <nav>
     <ul class='nav'>
@@ -20,20 +21,37 @@
       <li>element3</li>
     </ul>
   </nav>
-  <div class ='tictactoe'>
-<div class='grid-container'>
-  <div class ='1' id='one'></div>
-  <div class ='2' id='one'></div>
-  <div class ='3' id='one'></div>
-  <div class ='4' id='one'></div>
-  <div class ='5' id='one'></div>
-  <div class ='6' id='one'></div>
-  <div class ='7' id='one'></div>
-  <div class ='8' id='one'></div>
-  <div class ='9' id='one'></div>
+  <div class='tictactoe'>
+    <div class='grid-container3' id='grid'>
+      <div class='box' id='1'></div>
+      <div class='box' id='2'></div>
+      <div class='box' id='3'></div>
+      <div class='box' id='4'></div>
+      <div class='box' id='5'></div>
+      <div class='box' id='6'></div>
+      <div class='box' id='7'></div>
+      <div class='box' id='8'></div>
+      <div class='box' id='9'></div>
+      <div class='11' id='sideRight'>
+        <h1></h1>
+      </div>
+      <div class='10' id='sideLeft'>
+        <h1>Score</h1>
+        <p id='user1Score'>Player1:</p>
+        <p id='user2Score'>Player2:</p>
 
-</div>
-<input id ='reset' type='button' value='reset'></div>
-</div>
+        Player1<input id='input1' type='text' value="O" />
+        Player2
+        <input id='input2' type='text' value="X" />
+
+        <input id='reset' type='button' value='reset' />
+        <input id='buttonFour' type='button' value='four' />
+        <input id='buttonThree' type='button' value='three' />
+
+
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
