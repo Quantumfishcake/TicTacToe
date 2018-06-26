@@ -1,97 +1,85 @@
-var gridArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-var moveCount = 0
-var isWinner = 0
+var gridArray = []
 var turn = 1
+let isWinner = false
 var user1Score = 0
 var user2Score = 0
-var token1 = 'O'
-var token2 = "X"
 
-
-// const fourbyfour = function () {
-//   $('#grid').append($('div'))
-// }
-
-const init2 = function() {
-  for (var i = 0; i < 10; i++) {
-    $('.box').text('')
-  }
-  gridArray = [0,0,0,0,0,0,0,0,0]
-  $('#sideRight').html('')
-  moveCount = 0
-  isWinner = 0
-  turn = 1
-}
-const checkWinner = function() {
-  if (
-     gridArray[0] == gridArray[1] && gridArray[1] == gridArray[2] && gridArray[0] > 0 ||
-     gridArray[3] == gridArray[4] && gridArray[4] == gridArray[5] && gridArray[3] > 0 ||
-     gridArray[6] == gridArray[7] && gridArray[7] == gridArray[8] && gridArray[6] > 0 ||
-     gridArray[0] == gridArray[3] && gridArray[3] == gridArray[6] && gridArray[0] > 0 ||
-     gridArray[1] == gridArray[4] && gridArray[4] == gridArray[7] && gridArray[1] > 0 ||
-     gridArray[2] == gridArray[5] && gridArray[5] == gridArray[8] && gridArray[2] > 0 ||
-     gridArray[0] == gridArray[4] && gridArray[4] == gridArray[8] && gridArray[0] > 0 ||
-     gridArray[2] == gridArray[4] && gridArray[4] == gridArray[6] && gridArray[2] > 0
-   ){
-    if (turn === 2){
-      user1Score ++
-      $('#user1Score').html(`O: ${user1Score}`)
-      $('#sideRight').html(`<h1>Player1 Wins<h1>`)
+function createTable(a) {
+  var tableElem, rowElem, colElem, count = 0,
+    count2 = 0;
+  tableElem = $('table');
+  for (var i = 0; i < a; i++) {
+    rowElem = $(`<tr id='row${count2}'></tr>`);
+    gridArray.push([])
+    count2++
+    count = 0
+    for (var j = 0; j < a; j++) {
+      colElem = $(`<td id='${i}, ${count}'></td>`);
+      rowElem.append(colElem);
+      gridArray[i].push(0)
+      count++
     }
-    else {
-      user2Score ++
-      $('#user2Score').html(`X: ${user2Score}`)
-      $('#sideRight').html(`<h1>Player2 Wins<h1>`)
-    }
-    $('#one').addClass('line')
-    return true
-  } else {
-    return false
+    tableElem.append(rowElem);
   }
 }
 $(document).ready(function() {
 
-
-  $('#four').on('click', function() {
-    console.log('cat')
-    $('#grid').append($('div'))
-  })
-
-
-    $('.box').on('click', function() {
-      const token1 = $('#input1').val()
-      const token2 = $('#input2').val()
-      console.log(this.id)
-      if (isWinner === 1) {
-        console.log('click reset to play again')
-        return
-      } else if ($(this).text() === 'X' || $(this).text() === 'O') {
-        console.log('already clicked')
-      } else {
-        if (turn === 1) {
-          $(this).text(token1)
-          gridArray.splice((this.id-1),1, 1)
-          console.log(gridArray);
-          turn = 2
-          moveCount++
-          console.log(token1);
-        } else {
-          $(this).text(token2)
-          gridArray.splice((this.id-1),1, 2)
-          console.log(gridArray);
-          turn = 1
-          moveCount++
-          console.log(token1);
-        }
-      }
-      if (checkWinner()) {
-        isWinner = 1
-      }
-      else if (moveCount === 9) {
+  const board = parseInt($('#input3').val(), 10)
+  createTable(board)
+  let moveCount = 0
+  let maxMoves = board * board
+  $('table').on('click', 'td', function() {
+    let token1 = $('#input1').val()
+    let token2 = $('#input2').val()
+    if (turn === 1 && (gridArray[this.id[0]][this.id[3]]) === 0 && isWinner === false) {
+      gridArray[this.id[0]][this.id[3]] = 1
+      $(this).text(token1)
+      turn = 2
+      moveCount++
+      checkForWinner(1)
+      if (moveCount === maxMoves && isWinner === false) {
         $('#sideRight').html('<h1>DRAW<h1>')
+        return
       }
-    })
-    $('#reset').on('click', function() {
-      init()
-    })
+    } else if (turn === 2 && (gridArray[this.id[0]][this.id[3]]) === 0 && isWinner === false) {
+      gridArray[this.id[0]][this.id[3]] = 2
+      $(this).text(token2)
+      turn = 1
+      moveCount++
+      checkForWinner(2)
+      if (moveCount === maxMoves && isWinner === false) {
+        $('#sideRight').html('<h1>DRAW<h1>')
+        return
+      }
+    }
   })
+  $('#createNewButton').on('click', function() {
+    const board = parseInt($('#input3').val(), 10)
+    $('tr').remove()
+    gridArray = []
+    isWinner = false
+    turn = 1
+    moveCount = 0
+    maxMoves = (board * board)
+    $('#sideRight').html('')
+    createTable(board)
+  })
+})
+const checkForWinner = function(marker) {
+  const rows = gridArray
+  const cols = math.transpose(gridArray)
+  const diag = math.diag(gridArray)
+  const possibleOutcomes = [...rows, ...cols, diag]
+  isWinner = possibleOutcomes.some(option => option.every(item => item === marker))
+  if (isWinner && marker === 1) {
+    user1Score++
+    console.log(user1Score);
+    $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
+    $('#user1Score').html(`Player1: ${user1Score}`)
+  } else if (isWinner && marker === 2){
+    user2Score++
+    console.log(user2Score);
+  $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
+  $('#user2Score').html(`Player2: ${user2Score}`)
+}
+}

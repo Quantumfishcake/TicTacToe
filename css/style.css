@@ -13,6 +13,15 @@ body {
   grid-template-rows: 10vw 10vw 10vw;
 } */
 
+td {
+  height: 50px;
+  width: 50px;
+  border: solid black 1px;
+}
+tr {
+  border: solid black 1px;
+}
+
 
 .grid-container3 {
   display: grid;
