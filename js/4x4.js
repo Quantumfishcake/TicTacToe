@@ -23,7 +23,6 @@ function createTable(a) {
   }
 }
 $(document).ready(function() {
-
   const board = parseInt($('#input3').val(), 10)
   createTable(board)
   let moveCount = 0
@@ -33,7 +32,7 @@ $(document).ready(function() {
     let token2 = $('#input2').val()
     if (turn === 1 && (gridArray[this.id[0]][this.id[3]]) === 0 && isWinner === false) {
       gridArray[this.id[0]][this.id[3]] = 1
-      $(this).text(token1)
+      $(this).addClass('red').text(token1)
       turn = 2
       moveCount++
       checkForWinner(1)
@@ -43,7 +42,7 @@ $(document).ready(function() {
       }
     } else if (turn === 2 && (gridArray[this.id[0]][this.id[3]]) === 0 && isWinner === false) {
       gridArray[this.id[0]][this.id[3]] = 2
-      $(this).text(token2)
+      $(this).addClass('black').text(token2)
       turn = 1
       moveCount++
       checkForWinner(2)
@@ -69,8 +68,13 @@ const checkForWinner = function(marker) {
   const rows = gridArray
   const cols = math.transpose(gridArray)
   const diag = math.diag(gridArray)
-  const possibleOutcomes = [...rows, ...cols, diag]
-  isWinner = possibleOutcomes.some(option => option.every(item => item === marker))
+  const diag2 = math.diag(gridArray.slice().reverse());
+  const possibleOutcomes = [...rows, ...cols, diag, diag2]
+  isWinner = possibleOutcomes.some(function (element) {
+    return element.every(function (item) {
+      return item === marker
+    })
+  })
   if (isWinner && marker === 1) {
     user1Score++
     console.log(user1Score);
