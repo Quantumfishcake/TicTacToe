@@ -2,9 +2,7 @@ var gridArray = []
 var turn = 1
 let isWinner = false
 var user1Score = 0
-var user2Score = 0
-
-
+var computerScore = 0
 
 const checkWinner = function(array, token) {
   let g = array
@@ -34,7 +32,7 @@ function createTable() {
     count2++
     count = 0
     for (var j = 0; j < 3; j++) {
-      colElem = $(`<td id='${i}${count}'></td>`);
+      colElem = $(`<td id='${i}${count}' class='easytd'></td>`);
       rowElem.append(colElem);
       gridArray[i].push(0)
       count++
@@ -43,50 +41,58 @@ function createTable() {
   }
 }
 $(document).ready(function() {
-  const board = parseInt($('#input3').val(), 10)
   createTable()
   let moveCount = 0
   let maxMoves = 9
   $('table').on('click', 'td', function() {
-    console.log('help');
-
-
-      console.log('cat');
+    if ((gridArray[this.id[0]][this.id[1]]) === 0 && isWinner === false) {
       gridArray[this.id[0]][this.id[1]] = 1
       $(this).addClass('red')
-
       moveCount++
+      if (moveCount === 5) {
+        if (checkWinner(concate2(gridArray), 1)) {
+          $('#sideRight').html('<h1>Winner<h1>')
 
+          return
+        } else if (checkWinner(concate2(gridArray), 2)) {
+          $('#sideRight').html('<h1>Looser<h1>')
 
-    // } else if (turn === 2 && (gridArray[this.id[0]][this.id[1]]) === 0 && isWinner === false) {
-    //   gridArray[this.id[0]][this.id[1]] = 2
-    //   $(this).addClass('black').text(token2)
-    //   turn = 1
-    //   moveCount++
-    //   checkForWinner(2)
-    //   if (moveCount === maxMoves && isWinner === false) {
-    //     $('#sideRight').html('<h1>DRAW<h1>')
-    //     return
-    //   }
+          return
+        } else {
+          $('#sideRight').html('<h1>Draw<h1>')
+          return
+        }
+      }
+      updateArray()
+      if (checkWinner(concate2(gridArray), 1)) {
+        isWinner = true
+        $('#sideRight').html('<h1>Winner<h1>')
+        user1Score += 1
+        $('#user1Score').html(`Player1: ${user1Score}`)
+        return
+      }
+      if (checkWinner(concate2(gridArray), 2)) {
+        isWinner = true
+        $('#sideRight').html('<h1>Looser<h1>')
+        computerScore += 1
+        $('#user2Score').html(`Computer: ${computerScore}`)
+        return
+      }
+    }
 
-// updateArray()
-    console.log(turn);
-    console.log(moveCount);
-    console.log(gridArray);
-
-
+    $('#reset').on('click', function() {
+      gridArray = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ]
+      $('td').removeClass('red')
+      $('td').removeClass('black')
+      isWinner = false
+      moveCount = 0
+      $('#sideRight').html('')
+    })
   })
-  // $('#createNewButton').on('click', function() {
-  //   const board = parseInt($('#input3').val(), 10)
-  //   $('tr').remove()
-  //   gridArray = []
-  //   isWinner = false
-  //   turn = 1
-  //   moveCount = 0
-  //   maxMoves = (board * board)
-  //   $('#sideRight').html('')
-  //   createTable(board)
-  // })
 })
 
 const possibleOutcomes = function() {
@@ -99,36 +105,34 @@ const possibleOutcomes = function() {
 }
 
 const checkForWinner = function(marker) {
-  const newo = possibleOutcomes()
-
-  isWinner = newo.some(function(element) {
+  const possibleOutcomes2 = possibleOutcomes()
+  isWinner = possibleOutcomes2.some(function(element) {
     return element.every(function(item) {
       return item === marker
     })
   })
   if (isWinner && marker === 1) {
     user1Score++
-    console.log(user1Score);
     $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
     $('#user1Score').html(`Player1: ${user1Score}`)
   } else if (isWinner && marker === 2) {
     user2Score++
-    console.log(user2Score);
     $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
     $('#user2Score').html(`Player2: ${user2Score}`)
   }
 }
-
-// ai
+//ai
+const concate2 = function(array) {
+  var gridArray2 = array[0].concat(array[1])
+  var gridArray3 = gridArray2.concat(gridArray[2])
+  return gridArray3
+}
 
 const concate = function() {
   var gridArray2 = gridArray[0].concat(gridArray[1])
   var gridArray3 = gridArray2.concat(gridArray[2])
-
   return gridArray3
-  console.log(gridArray3);
 }
-
 
 function indexOfEmpty() {
   var x = concate()
@@ -139,72 +143,26 @@ function indexOfEmpty() {
   return arrayOfEmptyIndexes;
 }
 
-
-
-// const filterer = function () {
-//   var array4 = []
-//   for (var i = 0; i < gridArray.length; i++) {
-//    array4.push(gridArray[i].filter(function(item) {
-//         return(item != 1 && item != 2)
-//       }));
-//   console.log(array4);
-//   }
-//
-// }
-
-
-//
-// const checkForWinner2 = function (){
-//   var gridarray99 =  gridarray.add[index[i]]
-//   if checkwinner(99) = true
-//   points + 10
-//   else if checkwinner(99) = false
-//   points - 10
-//   else points 0
-// }
-
-
 const createArrayToCheck = function(num, token) {
   let concat = concate()
-  console.log(concat);
   let arrayOfEmptyIndexes = indexOfEmpty()
-  console.log(arrayOfEmptyIndexes);
   let currentIndex = arrayOfEmptyIndexes[num]
-  console.log(currentIndex);
   let z = concat[currentIndex]
-  console.log(z);
   concat.splice(currentIndex, 1, token)
-  console.log(concat);
   return concat
-
 }
-
-
-// if checkwinner(x)  is true => points +20
-// if checkwinner(o) is true => points + 10
-// else do random
-
-
 const checkMove = function(num, token) {
   let points = 0
   let x = createArrayToCheck(num, token)
-  console.log(x);
   if (token === 2 && checkWinner(x, token) === true) {
-
     points += 50
     return points
-    console.log(points);
-
   }
   if (token === 1 && checkWinner(x, token) === true) {
-
     points += 50
-    console.log(points);
     return points
   }
-
 }
-
 const pickSpotToMove = function(token) {
   let points = 0
   let x = 0
@@ -213,132 +171,49 @@ const pickSpotToMove = function(token) {
   for (var i = 0; i < arrayOfEmptyIndexes.length; i++) {
     points = checkMove(i, token)
     if (points > 20) {
-      console.log(i);
       return i
     }
   }
-
   return -1
-    // var rand = (arrayOfEmptyIndexes[Math.floor(Math.random() * arrayOfEmptyIndexes.length)])
-    // console.log(rand)
-    // var rand2 = arrayOfEmptyIndexes.indexOf(rand)
-    //   console.log(rand2);
-    // return rand2
-
-
 }
-
-
-
-
 const returnTo3Arrays = function(array) {
   var newArray = []
   newArray.push(array.slice(0, 3), array.slice(3, 6), array.slice(6, 9))
-  console.log(newArray)
   return newArray
 }
-
 const aiMove = function() {
   let arrayOfEmptyIndexes = indexOfEmpty()
-  console.log(arrayOfEmptyIndexes);
   let x = pickSpotToMove(1)
   let y = pickSpotToMove(2)
-    console.log(x);
-    console.log(y);
   if (y >= 0) {
     let z = concate()
     let p = arrayOfEmptyIndexes[y]
-    console.log(p);
-
-
     z.splice(p, 1, 2)
-    console.log(z);
     gridArray = returnTo3Arrays(z)
-    console.log(gridArray);
     return gridArray
-
-
-    //position = x
-  }
-
-else if ( x >= 0){
+  } else if (x >= 0) {
     let z = concate()
     let p = arrayOfEmptyIndexes[x]
-    console.log(p);
-
-
     z.splice(p, 1, 2)
-    console.log(z);
     gridArray = returnTo3Arrays(z)
-    console.log(gridArray);
     return gridArray
-
-
-  }
-
-else {
-  var rand = (arrayOfEmptyIndexes[Math.floor(Math.random() * arrayOfEmptyIndexes.length)])
-  console.log(rand)
-  var rand2 = arrayOfEmptyIndexes.indexOf(rand)
-    console.log(rand2);
+  } else {
+    var rand = (arrayOfEmptyIndexes[Math.floor(Math.random() * arrayOfEmptyIndexes.length)])
+    var rand2 = arrayOfEmptyIndexes.indexOf(rand)
     let z = concate()
     let p = arrayOfEmptyIndexes[rand2]
-    console.log(p);
-
-
     z.splice(p, 1, 2)
-    console.log(z);
     gridArray = returnTo3Arrays(z)
-
     return gridArray
+  }
 }
-  //   else if (y > 0) {
-  //     console.log('cats');
-  //     let z = concate()
-  //     let p = arrayOfEmptyIndexes[y]
-  //     console.log(p);
-  //
-  //
-  //     z.splice(p, 1, 2)
-  //   console.log(z);
-  // gridArray = returnTo3Arrays(z)
-  // console.log(gridArray);
-  // return gridArray
-  //
-  //   }
-  // else if (y > 0){
-  //   //position = y
-  // }
-  // else {
-  //   //position random
-  // }
-}
-
 const updateArray = function() {
-  gridArray= aiMove()
-
+  gridArray = aiMove()
   for (var i = 0; i < 3; i++) {
     for (var j = 0; j < 3; j++) {
       if (gridArray[i][j] == 2) {
-        console.log('tom');
         $(`#${i}${j}`).addClass('black')
       }
     }
   }
-  return gridArray
 }
-
-
-
-
-
-
-
-
-
-//
-// const emptySpots = function(...gridArray) {
-//   return element.filter(function(item) {
-//     return item != 1 && item != 2;
-//   });
-// };

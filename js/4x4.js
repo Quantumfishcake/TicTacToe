@@ -52,7 +52,7 @@ $(document).ready(function() {
       }
     }
   })
-  $('#createNewButton').on('click', function() {
+  $('#reset').on('click', function() {
     const board = parseInt($('#input3').val(), 10)
     $('tr').remove()
     gridArray = []

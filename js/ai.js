@@ -98,6 +98,7 @@ $(document).ready(function() {
       round++
       if (round >= 9) {
         $('.results').html('Draw')
+          $('#sideRight').html('<h1>Draw<h1>')
         return;
       } else {
         round++;
@@ -105,7 +106,7 @@ $(document).ready(function() {
         $(`#${bestMoveAi}`).addClass('black')
         gameBoard[bestMoveAi] = ai;
         if (checkWinner(gameBoard, ai)) {
-          $('.results').html('loose')
+            $('#sideRight').html('<h1>Looser<h1>')
           finished = true
           return;
         }
@@ -119,7 +120,7 @@ round = 0
 finished = false
 $('.box').removeClass('red')
 $('.box').removeClass('black')
-$('.results').html("")
+$('#sideRight').html("")
 
 })
 
