@@ -21,6 +21,7 @@ const checkWinner = function(array, token) {
     return false
   }
 }
+//create a table
 function createTable() {
   var tableElem, rowElem, colElem, count = 0,
     count2 = 0;
@@ -43,6 +44,7 @@ $(document).ready(function() {
   createTable()
   let moveCount = 0
   let maxMoves = 9
+  //on click check conditions, make move run computer move function
   $('table').on('click', 'td', function() {
     if ((gridArray[this.id[0]][this.id[1]]) === 0 && isWinner === false) {
       gridArray[this.id[0]][this.id[1]] = 1
@@ -62,6 +64,7 @@ $(document).ready(function() {
           return
         }
       }
+      //run the ai functions
       updateArray()
       if (checkWinner(concate2(gridArray), 1)) {
         isWinner = true
@@ -78,7 +81,7 @@ $(document).ready(function() {
         return
       }
     }
-
+// reset the grid
     $('#reset').on('click', function() {
       gridArray = [
         [0, 0, 0],
@@ -95,14 +98,17 @@ $(document).ready(function() {
 })
 
 //ai
+
+//turn grid array into single line array
 const concate2 = function(array) {
   var gridArray2 = array[0].concat(array[1])
   var gridArray3 = gridArray2.concat(gridArray[2])
   return gridArray3
 }
 
+//get the index of the empty spots in the array
 
-function indexOfEmpty() {
+const indexOfEmpty = function() {
   var x = concate2(gridArray)
   var arrayOfEmptyIndexes = [];
   for (i = 0; i < x.length; i++)
@@ -110,7 +116,7 @@ function indexOfEmpty() {
       arrayOfEmptyIndexes.push(i);
   return arrayOfEmptyIndexes;
 }
-
+//put a number into the array to simulate ai move
 const createArrayToCheck = function(num, token) {
   let concat = concate2(gridArray)
   let arrayOfEmptyIndexes = indexOfEmpty()
@@ -119,18 +125,20 @@ const createArrayToCheck = function(num, token) {
   concat.splice(currentIndex, 1, token)
   return concat
 }
+//check if the new array has a winner
 const checkMove = function(num, token) {
   let points = 0
-  let x = createArrayToCheck(num, token)
-  if (token === 2 && checkWinner(x, token) === true) {
+  let newArray = createArrayToCheck(num, token)
+  if (token === 2 && checkWinner(newArray, token) === true) {
     points += 50
     return points
   }
-  if (token === 1 && checkWinner(x, token) === true) {
+  if (token === 1 && checkWinner(newArray, token) === true) {
     points += 50
     return points
   }
 }
+//loop through all the possible moves
 const pickSpotToMove = function(token) {
   let points = 0
   let x = 0
@@ -144,27 +152,35 @@ const pickSpotToMove = function(token) {
   }
   return -1
 }
+
+//return the single array back to a grid array
 const returnTo3Arrays = function(array) {
   var newArray = []
   newArray.push(array.slice(0, 3), array.slice(3, 6), array.slice(6, 9))
   return newArray
 }
+
 const aiMove = function() {
   let arrayOfEmptyIndexes = indexOfEmpty()
+  //run for player
   let x = pickSpotToMove(1)
+  //run for ai
   let y = pickSpotToMove(2)
+  //if ai can win, do it
   if (y >= 0) {
     let z = concate2(gridArray)
     let p = arrayOfEmptyIndexes[y]
     z.splice(p, 1, 2)
     gridArray = returnTo3Arrays(z)
     return gridArray
+    // else if player can win block that spot
   } else if (x >= 0) {
     let z = concate2(gridArray)
     let p = arrayOfEmptyIndexes[x]
     z.splice(p, 1, 2)
     gridArray = returnTo3Arrays(z)
     return gridArray
+    //else pick a random spot
   } else {
     var rand = (arrayOfEmptyIndexes[Math.floor(Math.random() * arrayOfEmptyIndexes.length)])
     var rand2 = arrayOfEmptyIndexes.indexOf(rand)

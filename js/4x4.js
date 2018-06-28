@@ -3,7 +3,7 @@ var turn = 1
 let isWinner = false
 var user1Score = 0
 var user2Score = 0
-
+//create the table
 function createTable(a) {
   var tableElem, rowElem, colElem, count = 0,
     count2 = 0;
@@ -22,6 +22,7 @@ function createTable(a) {
     tableElem.append(rowElem);
   }
 }
+
 $(document).ready(function() {
   const board = parseInt($('#input3').val(), 10)
   createTable(board)
@@ -30,6 +31,7 @@ $(document).ready(function() {
   $('table').on('click', 'td', function() {
     let token1 = $('#input1').val()
     let token2 = $('#input2').val()
+    //if click passes conditions change grid and add color
     if (turn === 1 && (gridArray[this.id[0]][this.id[3]]) === 0 && isWinner === false) {
       gridArray[this.id[0]][this.id[3]] = 1
       $(this).addClass('red').text(token1)
@@ -52,6 +54,7 @@ $(document).ready(function() {
       }
     }
   })
+//reset game
   $('#reset').on('click', function() {
     const board = parseInt($('#input3').val(), 10)
     $('tr').remove()
@@ -64,12 +67,16 @@ $(document).ready(function() {
     createTable(board)
   })
 })
+//check if there is a winner
 const checkForWinner = function(marker) {
   const rows = gridArray
+  //make array with cols and diags
   const cols = math.transpose(gridArray)
   const diag = math.diag(gridArray)
   const diag2 = math.diag(gridArray.slice().reverse());
+  //concat all the different arrays together
   const possibleOutcomes = [...rows, ...cols, diag, diag2]
+  //check if some of the new arrays matches win condition
   isWinner = possibleOutcomes.some(function (element) {
     return element.every(function (item) {
       return item === marker

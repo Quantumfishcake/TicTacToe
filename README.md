@@ -2,25 +2,26 @@
 
 ## Tic Tac Toe
 
-## link to live site
+A tic tac toe game with multiplayer options aswell as a single player mode to compete against two different levels of ai.
 
-http://google.com
+##### link to live site
 
- ![alt text](imgsrc)
+https://quantumfishcake.github.io/TicTacToe/
 
-**Lorem** ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. E
-xcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+##### Preview
 
-##lists
+ <img src="tictactoc.png" alt="drawing" width="200px"/>
 
-1. dasda
-2. asdasda
-3. sadas
+### How to play
+You will be provided three options upon starting the game. 2Player, AI Hard and Ai Easy. 2Player allows two people to play against each other on a board of any size. The default size for this board will be 5 but to change, simply input a new number and click reset to create your new game. AI Hard is a single player mode that allows you to compete against the computer. You can not win in this mode and if you do, something is bugged. Ai Easy puts you against a simpler AI.
 
-`code things here`
+#### libraries Used
 
-```js
-const hello = function (){
-  return x yz
-}
-```
+1. Jquery
+2. Mathjs
+
+### AI logic
+
+**AI Hard** Uses the minimax algorithm which allows it to check all possible outcomes
+
+**AI Easy** Simply checks if the computer can win or block the player from winning with their next move, otherwise it will pick a random spot.
