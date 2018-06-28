@@ -21,7 +21,6 @@ const checkWinner = function(array, token) {
     return false
   }
 }
-
 function createTable() {
   var tableElem, rowElem, colElem, count = 0,
     count2 = 0;
@@ -95,32 +94,6 @@ $(document).ready(function() {
   })
 })
 
-const possibleOutcomes = function() {
-  const rows = gridArray
-  const cols = math.transpose(gridArray)
-  const diag = math.diag(gridArray)
-  const diag2 = math.diag(gridArray.slice().reverse());
-  const possibleOutcomes = [...rows, ...cols, diag, diag2]
-  return possibleOutcomes
-}
-
-const checkForWinner = function(marker) {
-  const possibleOutcomes2 = possibleOutcomes()
-  isWinner = possibleOutcomes2.some(function(element) {
-    return element.every(function(item) {
-      return item === marker
-    })
-  })
-  if (isWinner && marker === 1) {
-    user1Score++
-    $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
-    $('#user1Score').html(`Player1: ${user1Score}`)
-  } else if (isWinner && marker === 2) {
-    user2Score++
-    $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
-    $('#user2Score').html(`Player2: ${user2Score}`)
-  }
-}
 //ai
 const concate2 = function(array) {
   var gridArray2 = array[0].concat(array[1])
@@ -128,14 +101,9 @@ const concate2 = function(array) {
   return gridArray3
 }
 
-const concate = function() {
-  var gridArray2 = gridArray[0].concat(gridArray[1])
-  var gridArray3 = gridArray2.concat(gridArray[2])
-  return gridArray3
-}
 
 function indexOfEmpty() {
-  var x = concate()
+  var x = concate2(gridArray)
   var arrayOfEmptyIndexes = [];
   for (i = 0; i < x.length; i++)
     if (x[i] === 0)
@@ -144,7 +112,7 @@ function indexOfEmpty() {
 }
 
 const createArrayToCheck = function(num, token) {
-  let concat = concate()
+  let concat = concate2(gridArray)
   let arrayOfEmptyIndexes = indexOfEmpty()
   let currentIndex = arrayOfEmptyIndexes[num]
   let z = concat[currentIndex]
@@ -166,7 +134,7 @@ const checkMove = function(num, token) {
 const pickSpotToMove = function(token) {
   let points = 0
   let x = 0
-  let concat = concate()
+  let concat = concate2(gridArray)
   let arrayOfEmptyIndexes = indexOfEmpty()
   for (var i = 0; i < arrayOfEmptyIndexes.length; i++) {
     points = checkMove(i, token)
@@ -186,13 +154,13 @@ const aiMove = function() {
   let x = pickSpotToMove(1)
   let y = pickSpotToMove(2)
   if (y >= 0) {
-    let z = concate()
+    let z = concate2(gridArray)
     let p = arrayOfEmptyIndexes[y]
     z.splice(p, 1, 2)
     gridArray = returnTo3Arrays(z)
     return gridArray
   } else if (x >= 0) {
-    let z = concate()
+    let z = concate2(gridArray)
     let p = arrayOfEmptyIndexes[x]
     z.splice(p, 1, 2)
     gridArray = returnTo3Arrays(z)
@@ -200,7 +168,7 @@ const aiMove = function() {
   } else {
     var rand = (arrayOfEmptyIndexes[Math.floor(Math.random() * arrayOfEmptyIndexes.length)])
     var rand2 = arrayOfEmptyIndexes.indexOf(rand)
-    let z = concate()
+    let z = concate2(gridArray)
     let p = arrayOfEmptyIndexes[rand2]
     z.splice(p, 1, 2)
     gridArray = returnTo3Arrays(z)

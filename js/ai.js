@@ -85,11 +85,6 @@ function minimax(newBoardArray, player) {
 }
 
 $(document).ready(function() {
-
-
-
-
-
   $("div").on('click','.box', function() {
     console.log('hi');
     if (!isNaN(gameBoard[this.id]) && finished === false) {
