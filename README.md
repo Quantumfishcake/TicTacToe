@@ -22,8 +22,7 @@ You will be provided three options upon starting the game. 2Player, AI Hard and 
 
 ### AI logic
 
-**AI Hard** Uses the minimax algorithm which allows it to check all possible outcomes
-
+**AI Hard** works by checking for winning spots followed by spots that will block the human and if it fails to meet those conditions it will pick a spot based on a small priority of middle--> corners followed lastly by a random spot.
 **AI Easy** Simply checks if the computer can win or block the player from winning with their next move, otherwise it will pick a random spot.
 
 ####Ackowledgments
