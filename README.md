@@ -25,3 +25,6 @@ You will be provided three options upon starting the game. 2Player, AI Hard and 
 **AI Hard** Uses the minimax algorithm which allows it to check all possible outcomes
 
 **AI Easy** Simply checks if the computer can win or block the player from winning with their next move, otherwise it will pick a random spot.
+
+####Ackowledgments
+-- slide bar courtesy of soheil

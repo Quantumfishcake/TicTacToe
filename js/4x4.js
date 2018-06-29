@@ -56,9 +56,23 @@ $(document).ready(function() {
       }
     }
   })
+$('#slider').on('input', function() {
+  const board = parseInt($('#slider').val(), 10)
+  $('#input3').val($('#slider').val())
+  $('tr').remove()
+  gridArray = []
+  isWinner = false
+  turn = 1
+  moveCount = 0
+  maxMoves = (board * board)
+  $('#sideRight').html('')
+  createTable(board)
+})
+
+
 //reset game
   $('#reset').on('click', function() {
-    const board = parseInt($('#input3').val(), 10)
+    const board = parseInt($('#slider').val(), 10)
     $('tr').remove()
     gridArray = []
     isWinner = false
