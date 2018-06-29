@@ -40,6 +40,7 @@ $(document).ready(function() {
       checkForWinner(1)
       if (moveCount === maxMoves && isWinner === false) {
         $('#sideRight').html('<h1>DRAW<h1>')
+        $('#sideRight').append('<img id="theImg" class="winImg" src="images/draw.jpeg" />')
         return
       }
     } else if (turn === 2 && (gridArray[this.id[0]][this.id[3]]) === 0 && isWinner === false) {
@@ -49,6 +50,7 @@ $(document).ready(function() {
       moveCount++
       checkForWinner(2)
       if (moveCount === maxMoves && isWinner === false) {
+        $('#sideRight').append('<img id="theImg" class="winImg" src="images/draw.jpeg" />')
         $('#sideRight').html('<h1>DRAW<h1>')
         return
       }
@@ -86,11 +88,15 @@ const checkForWinner = function(marker) {
     user1Score++
     console.log(user1Score);
     $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
+    $('#sideRight').append('<img id="theImg" class="winImg" src="images/win.jpg" />')
+    // $('#sideRight').add('img').src('/images/win.jpg')
+    $('.red').addClass('neon').removeClass('red')
     $('#user1Score').html(`Player1: ${user1Score}`)
   } else if (isWinner && marker === 2){
     user2Score++
     console.log(user2Score);
   $('#sideRight').html(`<h1>Player${marker} Wins<h1>`)
   $('#user2Score').html(`Player2: ${user2Score}`)
+      $('.black').removeClass('black').addClass('neon')
 }
 }

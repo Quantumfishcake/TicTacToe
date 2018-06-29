@@ -53,14 +53,17 @@ $(document).ready(function() {
       if (moveCount === 5) {
         if (checkWinner(concate2(gridArray), 1)) {
           $('#sideRight').html('<h1>Winner<h1>')
+          $('#sideRight').append('<img id="theImg" class="winImg" src="images/win.jpg" />')
 
           return
         } else if (checkWinner(concate2(gridArray), 2)) {
           $('#sideRight').html('<h1>Looser<h1>')
+          $('#sideRight').append('<img id="theImg" class="winImg" src="images/lose.png" />')
 
           return
         } else {
           $('#sideRight').html('<h1>Draw<h1>')
+          $('#sideRight').append('<img id="theImg" class="winImg" src="images/draw.jpeg" />')
           return
         }
       }
@@ -69,6 +72,7 @@ $(document).ready(function() {
       if (checkWinner(concate2(gridArray), 1)) {
         isWinner = true
         $('#sideRight').html('<h1>Winner<h1>')
+          $('#sideRight').append('<img id="theImg" class="winImg" src="images/win.jpg" />')
         user1Score += 1
         $('#user1Score').html(`Player1: ${user1Score}`)
         return
@@ -76,6 +80,7 @@ $(document).ready(function() {
       if (checkWinner(concate2(gridArray), 2)) {
         isWinner = true
         $('#sideRight').html('<h1>Looser<h1>')
+          $('#sideRight').append('<img id="theImg" class="winImg" src="images/lose.png" />')
         computerScore += 1
         $('#user2Score').html(`Computer: ${computerScore}`)
         return
@@ -182,6 +187,40 @@ const aiMove = function() {
     return gridArray
     //else pick a random spot
   } else {
+    if (arrayOfEmptyIndexes.indexOf(4) >= 0)
+    {
+      let z = concate2(gridArray)
+      let p = arrayOfEmptyIndexes[rand2]
+      z.splice(4, 1, 2)
+      gridArray = returnTo3Arrays(z)
+      return gridArray
+    }
+    if (arrayOfEmptyIndexes.indexOf(0) >= 0){
+      let z = concate2(gridArray)
+      let p = arrayOfEmptyIndexes[rand2]
+      z.splice(0, 1, 2)
+      gridArray = returnTo3Arrays(z)
+      return gridArray
+    }  if (arrayOfEmptyIndexes.indexOf(2) >= 0){
+        let z = concate2(gridArray)
+        let p = arrayOfEmptyIndexes[rand2]
+        z.splice(2, 1, 2)
+        gridArray = returnTo3Arrays(z)
+        return gridArray
+      }  if (arrayOfEmptyIndexes.indexOf(6) >= 0){
+          let z = concate2(gridArray)
+          let p = arrayOfEmptyIndexes[rand2]
+          z.splice(6, 1, 2)
+          gridArray = returnTo3Arrays(z)
+          return gridArray
+        }  if (arrayOfEmptyIndexes.indexOf(8) >= 0){
+            let z = concate2(gridArray)
+            let p = arrayOfEmptyIndexes[rand2]
+            z.splice(8, 1, 2)
+            gridArray = returnTo3Arrays(z)
+            return gridArray
+          }
+
     var rand = (arrayOfEmptyIndexes[Math.floor(Math.random() * arrayOfEmptyIndexes.length)])
     var rand2 = arrayOfEmptyIndexes.indexOf(rand)
     let z = concate2(gridArray)
